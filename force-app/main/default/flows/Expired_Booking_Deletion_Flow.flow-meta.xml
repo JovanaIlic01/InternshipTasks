@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <environments>Default</environments>
+    <interviewLabel>Expired Booking Deletion Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Expired Booking Deletion Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <name>Delete</name>
+        <label>Delete Expired Bookings</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Check_out__c</field>
+            <operator>LessThan</operator>
+            <value>
+                <elementReference>TodaysDate</elementReference>
+            </value>
+        </filters>
+        <object>Booking__c</object>
+    </recordDeletes>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Delete</targetReference>
+        </connector>
+        <object>Booking__c</object>
+        <schedule>
+            <frequency>Weekly</frequency>
+            <startDate>2023-04-06</startDate>
+            <startTime>00:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>TodaysDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>$Flow.CurrentDate</elementReference>
+        </value>
+    </variables>
+</Flow>
